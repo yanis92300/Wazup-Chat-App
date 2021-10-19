@@ -1,0 +1,30 @@
+.content{
+
+    border-radius: 25px;
+    height:5%;
+    width: 30%;
+position: fixed;
+right: 15%;
+bottom: 10%;
+background-color: beige;
+
+}
+
+.button {
+    position: fixed;
+    
+    width: 10%;
+    height: 3%;
+    border-radius: 18px;
+    background-color: #1c89ff;
+    border: solid 1px transparent;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 100;
+    cursor: pointer;
+    right: 4%;
+    bottom:11.2%;
+  }
+
+
+ 

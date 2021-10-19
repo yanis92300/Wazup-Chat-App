@@ -1,0 +1,43 @@
+.messages{
+
+    width: 70%;
+    height: 69.88%;
+    position: fixed;    
+    background: rgb(41, 35, 35);
+    bottom: 18.6%;
+    left:30%;
+
+}
+
+.list
+{
+    margin: '.2rem';
+    padding: '.2rem';
+    position: fixed;
+    width: 100%;
+    
+    
+
+}
+
+
+.li {
+    margin: 0;
+       padding:0;
+    list-style-type: none;
+    font-size: 60%;
+   margin-bottom: 2%;
+    border-radius: 18px;
+    background-color: #1c89ff;
+    border: solid 1px transparent;
+    overflow: auto;
+    width: 40%;
+
+  
+}
+
+.li:nth-child(2n){
+background-color: rgb(59, 216, 59);
+
+
+}
