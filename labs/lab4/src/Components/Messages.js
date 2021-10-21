@@ -29,24 +29,12 @@ export const Messages = () => {
         
         yeahh
         `,
-      },{
-        author: 'sergei',
-        creation: 1602840139202,
-        content: `
-       hahahah
-        `,
-      },{
-        author: 'david',
-        creation: 1602844139200,
-        content: `
-       des barres le reuf
-        `,
       }])
 
     
     return (
         <div className='messages'>
-
+<nav>
 <ul className='list'>
               { messages.map( (message, i) => (
                 <li key={i} className='li'>
@@ -66,6 +54,7 @@ export const Messages = () => {
                 </li>
               ))}
             </ul>
+            </nav>
 
             <div className='form'>
             < SendBox addMessage={addMessage} />
