@@ -15,7 +15,6 @@ export const Conv = ({
         <div className='conv'>
             <Messages />
             
-            <MessageForm  />
                     </div>
     ) 
 }

@@ -4,6 +4,7 @@ import './MessageForm'
 
 import React from 'react'
 import {useState} from 'react';
+import { SendBox } from './SendBox';
 
 export const Messages = () => {
     const addMessage = (message) => {
@@ -65,6 +66,10 @@ export const Messages = () => {
                 </li>
               ))}
             </ul>
+
+            <div className='form'>
+            < SendBox addMessage={addMessage} />
+        </div>
         </div>
     )
 }
