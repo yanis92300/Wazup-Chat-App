@@ -1,16 +1,18 @@
-.channels{
-
-    width: 30%;
-    height: 81.88%;
-    position: fixed;    
-    background: rgb(46, 42, 42);
-    bottom: 6.6%;
-    left:0;
+.channels {
+  width: 30%;
+  height: 81.88%;
+  position: fixed;
+  background: rgb(46, 42, 42);
+  bottom: 6.6%;
+  left: 0;
 }
 
-.label_channel{
-
-    color: rgb(240, 234, 234); font-family: 'Open Sans', sans-serif; font-size: 30px; font-weight: 300; line-height: 32px; margin: 0 0 72px; text-align: center;
-
+.label_channel {
+  color: rgb(240, 234, 234);
+  font-family: "Open Sans", sans-serif;
+  font-size: 30px;
+  font-weight: 300;
+  line-height: 32px;
+  margin: 0 0 72px;
+  text-align: center;
 }
-
