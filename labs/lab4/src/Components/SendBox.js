@@ -2,8 +2,6 @@ import './SendBox.css'
 import './Messages'
 import './MessageForm'
 
-
-
 export const SendBox = ({
     addMessage
   }) => {
@@ -20,8 +18,7 @@ export const SendBox = ({
       e.target.elements.content.value = ''
     } 
 
-     
-    return (
+       return (
         
         <form onSubmit={onSubmit} >
             
