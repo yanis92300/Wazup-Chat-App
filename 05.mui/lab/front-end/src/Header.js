@@ -4,7 +4,7 @@
 const styles = {
   header: {
     height: '60px',
-    backgroundColor: 'red',
+    backgroundColor: 'grey',
     flexShrink: 0,
     position: "relative",
     bottom:0

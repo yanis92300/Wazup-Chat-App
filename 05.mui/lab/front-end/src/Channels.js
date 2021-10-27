@@ -20,6 +20,7 @@ import { red } from "@mui/material/colors";
 import {useState, useEffect} from 'react';
 import axios from 'axios';
 // Layout
+import Avatar from '@mui/material/Avatar';
 const drawerWidth = 200;
 
 
@@ -115,10 +116,10 @@ export default function App() {
       >
         <Divider />
         <List   style={{backgroundColor: '#12824C', color: '#FFFFFF'}}>
-          {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-            <ListItem button key={text} backgroundColor="red">
+          {["Channel 1", "Channel 2", "Channel 3", "Channel 4"].map((text, index) => (
+            <ListItem button key={text} backgroundColor="grey">
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                <Avatar>H</Avatar>
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
