@@ -1,3 +1,5 @@
-2021/12/14-02:04:56.356 49a4 Recovering log #1087
-2021/12/14-02:04:56.362 49a4 Delete type=0 #1087
-2021/12/14-02:04:56.362 49a4 Delete type=3 #1086
+2021/12/14-13:26:23.203 bbc Recovering log #588
+2021/12/14-13:26:23.203 bbc Level-0 table #590: started
+2021/12/14-13:26:23.206 bbc Level-0 table #590: 475 bytes OK
+2021/12/14-13:26:23.211 bbc Delete type=0 #588
+2021/12/14-13:26:23.212 bbc Delete type=3 #587
