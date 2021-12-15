@@ -97,7 +97,7 @@ export const Leftbar = () => {
         </div>
         <List disablePadding>
           <Divider />
-          <ListItem disablePadding>
+          <ListItem >
             <ListItemButton style={{ paddingBottom: "10px" }}>
               <ListItemAvatar>
                 <Avatar
@@ -114,7 +114,7 @@ export const Leftbar = () => {
             </ListItemButton>
           </ListItem>
           <Divider />
-          <ListItem disablePadding>
+          <ListItem >
             <ListItemButton style={{ paddingBottom: "10px" }}>
               <ListItemAvatar>
                 <Avatar
@@ -131,7 +131,7 @@ export const Leftbar = () => {
             </ListItemButton>
           </ListItem>
           <Divider />
-          <ListItem disablePadding>
+          <ListItem >
             <ListItemButton style={{ paddingBottom: "10px" }}>
               <ListItemAvatar>
                 <Avatar

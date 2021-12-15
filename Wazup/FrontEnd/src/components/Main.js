@@ -33,7 +33,7 @@ export const Main = () => {
             borderLeftColor: "#dbd9d9",
           }}
         >
-          <Messages />
+          <Messages /> 
         </Grid>
         {/* <Grid item sm={3}></Grid> */}
       </Grid>
