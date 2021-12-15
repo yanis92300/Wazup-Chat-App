@@ -100,7 +100,7 @@ export const Messages = () => {
           <div className={classes.messageBottom}>1 hour ago</div>
         </div> */}
         <Message />
-        <Message own={true} />
+        <Message own={true}  />
         <Message />
         <Message own={true} />
         <Message />

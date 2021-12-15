@@ -4,12 +4,27 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { theme } from "./theme";
 import { ThemeProvider } from "@mui/styles";
+import {
+  BrowserRouter as Router,
+} from "react-router-dom";
+import { Provider as ContextProvider } from './Context';
+import { CookiesProvider } from "react-cookie";
+
+
+
+
 
 ReactDOM.render(
   <React.StrictMode>
+    <ContextProvider>
+      <CookiesProvider>
     <ThemeProvider theme={theme}>
+      <Router>
       <App />
+      </Router>
     </ThemeProvider>
+    </CookiesProvider>
+    </ContextProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
