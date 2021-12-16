@@ -72,7 +72,17 @@ const Redirect = ({
   codeVerifier,
 }) => {
   const styles = useStyles(useTheme())
+  const paperStyle = {
+    padding: 20,
+    height: "70vh",
+    width: 400,
+    margin: "20px auto",
+  };
+  const avatarStyle = { backgroundColor: "#1bbd7e" };
   const btnstyle = { margin: "8px 0" };
+  const handleClickSignUp = () => {
+    window.location = "/Signup";
+  };
   const redirect = (e) => {
     e.stopPropagation()
     const code_challenge = base64URLEncode(sha256(codeVerifier))
@@ -89,16 +99,63 @@ const Redirect = ({
   }
   return (
     <div >
-       <Button
+
+      <Grid>
+       <Paper elevation={10} style={paperStyle}>
+         <Grid align="center">
+           <Avatar style={avatarStyle}>
+             <LockOutlinedIcon />
+           </Avatar>
+           <h2>Sign In</h2>
+        </Grid>
+        <Button
           type="submit"
           color="primary"
           variant="contained"
-          style={{position:"absolute", left :"50%", transform : "TranslateX(-50%)",top :"50%",transform : "TranslateY-50%)"}}
-          // fullWidth
+          style={{position:"absolute", left :"50%", transform : "translate(-50%, -50%)",top :"50%",width:"300px",height:"60px"}}
           onClick={redirect}
         >
-          Sign in with Open ID
+          <label style={{fontSize:"18px"}}>Sign in with...</label>
         </Button>
+         <TextField style={{position:"relative", top:"5%"}}
+         label="Username"
+           placeholder="Enter username"
+           fullWidth
+           required
+         />
+         <TextField style={{position:"relative", top:"10%"}}
+           label="Password"
+           placeholder="Enter password"
+           type="password"
+          fullWidth
+           required
+         /> *
+         <FormControlLabel style={{position:"absolute", top:"28%"}}
+           control={<Checkbox name="checkedB" color="primary" />}
+           label="Remember me"
+         />
+         <Typography style={{position:"absolute", top:"32%"}}>
+           <Link >Forgot password ?</Link>
+         </Typography>
+         <Typography>
+           {" "}
+           <Button
+             onClick={handleClickSignUp}
+             style={{
+              backgroundColor: "#C8C8C8",
+               position:"absolute", left :"50%", transform : "translate(-50%, -50%)",top :"60%",width:"300px",height:"60px"
+             }}
+           >
+             
+             <label style={{fontSize:"18px"}}>Sign up</label>
+             </Button>
+
+    </Typography>      
+
+        </Paper>
+
+      </Grid>
+       
       {/* <Link onClick={redirect} color="secondary">Login with OpenID Connect and OAuth2</Link> */}
     </div>
   )
@@ -185,10 +242,7 @@ const Login = ({
   // const handleClickSignIn = () => {
   //   window.location = "/channels";
   // };
-  // const handleClickSignUp = () => {
-  //   window.location = "/Signup";
-  // };
-  // const avatarStyle = { backgroundColor: "#1bbd7e" };
+
   // const btnstyle = { margin: "8px 0" };
   
     // <Grid>
