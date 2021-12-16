@@ -3,6 +3,13 @@ import SearchIcon from "@mui/icons-material/Search";
 import BuildIcon from "@mui/icons-material/Build";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useState } from "react";
+/** @jsxImportSource @emotion/react */
+import { useContext } from 'react';
+// Layout
+import { useTheme } from '@mui/styles';
+import Context from '../Context';
+import { Link } from "react-router-dom";
+
 
 import {
   AppBar,
@@ -51,6 +58,9 @@ const useStyles = makeStyles((theme) => ({
 
 export const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const {
+    oauth, setOauth,
+     } = useContext(Context)
   const classes = useStyles();
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -59,12 +69,31 @@ export const Navbar = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const onClickLogout = (e) => {
+    e.stopPropagation()
+    setOauth(null)
+  }
   return (
     <AppBar position="fixed">
       <Toolbar className={classes.toolbar}>
         <Typography variant="h6" className={classes.logoLg}>
           Wazup Chat
         </Typography>
+        
+        {/* <Typography> 
+        {
+        oauth ?
+          <span>
+            {oauth.email}
+          </span>
+        :
+          <span>new user</span>
+      }
+        </Typography> */}
+
+
+       
         <Typography variant="h6" className={classes.logoSm}>
           Wazup
         </Typography>
@@ -98,7 +127,7 @@ export const Navbar = () => {
             Profile
           </MenuItem>
           <MenuItem onClick={handleClose}>My account</MenuItem>
-          <MenuItem onClick={handleClose}>Logout</MenuItem>
+          <MenuItem onClick={onClickLogout}>Logout</MenuItem>
         </Menu>
       </Toolbar>
     </AppBar>

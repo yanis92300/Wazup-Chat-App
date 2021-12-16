@@ -61,6 +61,10 @@ const useStyles = (theme) => ({
       },
     },
   },
+
+  welcome :{
+    backgrounColor:"red"
+  }
 })
 
 const Redirect = ({
@@ -84,13 +88,13 @@ const Redirect = ({
     window.location = url
   }
   return (
-    <div css={styles.root}>
+    <div >
        <Button
           type="submit"
           color="primary"
           variant="contained"
-          style={btnstyle}
-          fullWidth
+          style={{position:"absolute", left :"50%", transform : "TranslateX(-50%)",top :"50%",transform : "TranslateY-50%)"}}
+          // fullWidth
           onClick={redirect}
         >
           Sign in with Open ID
@@ -113,8 +117,8 @@ const Tokens = ({
     setOauth(null)
   }
   return (
-    <div css={styles.root}>
-      Welcome {email} <Link onClick={logout} color="secondary">logout</Link>
+    <div css={styles.welcome}>
+   <Link onClick={logout} color="secondary">logout</Link>
     </div>
   )
 }
@@ -158,7 +162,7 @@ const Login = ({
   onUser
 }) => {
   const styles = useStyles(useTheme());
-
+  
   const [cookies, setCookie, removeCookie] = useCookies([]);
   const {oauth, setOauth} = useContext(Context)
   const config = {
@@ -255,6 +259,8 @@ const Login = ({
       }
     }else{ // yes: we are coming from an oauth server
       console.log('get code_verifier', cookies.code_verifier)
+  
+      console.log("yanis");
       return (
         <LoadToken
           code={code}

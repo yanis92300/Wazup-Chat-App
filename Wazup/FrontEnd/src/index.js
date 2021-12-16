@@ -10,10 +10,6 @@ import {
 import { Provider as ContextProvider } from './Context';
 import { CookiesProvider } from "react-cookie";
 
-
-
-
-
 ReactDOM.render(
   <React.StrictMode>
     <ContextProvider>
