@@ -61,6 +61,8 @@ export const Navbar = () => {
   const {
     oauth, setOauth,
      } = useContext(Context)
+     const payload = useContext(Context)
+
   const classes = useStyles();
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -81,16 +83,16 @@ export const Navbar = () => {
           Wazup Chat
         </Typography>
         
-        {/* <Typography> 
-        {
+        <Typography> 
+        { 
         oauth ?
           <span>
-            {oauth.email}
+            {oauth.username}
           </span>
         :
           <span>new user</span>
       }
-        </Typography> */}
+        </Typography>
 
 
        

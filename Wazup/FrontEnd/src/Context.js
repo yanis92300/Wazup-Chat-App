@@ -25,6 +25,7 @@ export const Provider = ({
             ).toString('utf-8')
           )
           oauth.email = payload.email
+          oauth.username = payload.preferred_username
           setCookie('oauth', oauth)
         }else{
           setCurrentChannel(null)

@@ -187,6 +187,7 @@ module.exports = {
   users: {
     create: async (user) => {
       if (!user.username) throw Error("Invalid user");
+      if (!user.email) throw Error("Invalid user");
       const id = uuidv4();
       await db.put(`users:${id}`, user);
       return merge(user, { id: id });

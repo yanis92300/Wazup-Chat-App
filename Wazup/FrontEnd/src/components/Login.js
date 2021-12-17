@@ -185,6 +185,7 @@ const LoadToken = ({
   codeVerifier,
   config,
   removeCookie,
+  oauth,
   setOauth
 }) => {
   const styles = useStyles(useTheme())
@@ -197,18 +198,65 @@ const LoadToken = ({
         , qs.stringify ({
           grant_type: 'authorization_code',
           client_id: `${config.client_id}`,
-          code_verifier: `${codeVerifier}`,
+          code_verifier: `${codeVerifier}`, 
           redirect_uri: `${config.redirect_uri}`,
           code: `${code}`,
         }))
         removeCookie('code_verifier')
         setOauth(data)
+        // const newUser = JSON.stringify({username : data.username})
+        const  users = await axios.get('http://localhost:3001/users')   
+        var isHere = false
+        users.data.map(async(user)=>{
+
+          if(data.email === user.email )
+          {
+            isHere = true   
+            // return;        
+            
+          }            
+      })
+
+            if(!isHere)
+            {
+              await axios.post('http://localhost:3001/users',{username : data.username, email: data.email})
+
+            }
+          
+
+        
+
+        
+
+        
+
+
+
+
+
+
+      // if(users.data.find(!data.email) )
+      //   await axios.post('http://localhost:3001/users',{username : data.username, email: data.email}) 
+                
+        
         navigate('/')
       }catch (err) {
         console.error(err)
       }
     }
+
+    
+        
+      
+        
+      
+    
     fetch()
+    //// requete post
+    // add_user();
+
+
+
   })
   return (
     <div css={styles.root}>Loading tokens</div>
@@ -227,77 +275,12 @@ const Login = ({
     token_endpoint: 'http://localhost:5556/dex/token',
     client_id: 'webtech-frontend',
     redirect_uri: 'http://localhost:3000',
-    scope: 'openid%20email%20offline_access',
+    scope: 'openid%20profile%20email%20offline_access',   
   }
 
   const params = new URLSearchParams(window.location.search)
   const code = params.get('code')
-  // const paperStyle = {
-  //   padding: 20,
-  //   height: "70vh",
-  //   width: 280,
-  //   margin: "20px auto",
-  // };
-
-  // const handleClickSignIn = () => {
-  //   window.location = "/channels";
-  // };
-
-  // const btnstyle = { margin: "8px 0" };
   
-    // <Grid>
-    //   <Paper elevation={10} style={paperStyle}>
-    //     <Grid align="center">
-    //       <Avatar style={avatarStyle}>
-    //         <LockOutlinedIcon />
-    //       </Avatar>
-    //       <h2>Sign In</h2>
-    //     </Grid>
-    //     {/* <TextField
-    //       label="Username"
-    //       placeholder="Enter username"
-    //       fullWidth
-    //       required
-    //     />
-    //     <TextField
-    //       label="Password"
-    //       placeholder="Enter password"
-    //       type="password"
-    //       fullWidth
-    //       required
-    //     /> */}
-    //     {/* <FormControlLabel
-    //       control={<Checkbox name="checkedB" color="primary" />}
-    //       label="Remember me"
-    //     /> */}
-    //     {/* <Button
-    //       type="submit"
-    //       color="primary"
-    //       variant="contained"
-    //       style={btnstyle}
-    //       fullWidth
-    //       onClick={redirect}
-    //     >
-    //       Sign in
-    //     </Button> */}
-    //     {/* <Typography>
-    //       <Link>Forgot password ?</Link>
-    //     </Typography>
-    //     <Typography>
-    //       {" "}
-    //       Do you have an account ?
-    //       <Button
-    //         onClick={handleClickSignUp}
-    //         style={{
-    //           backgroundColor: "#C8C8C8",
-    //           marginLeft: "20px",
-    //         }}
-    //       >
-    //         Sign Up
-    //       </Button>
-    //     </Typography> */}
-    //   </Paper>
-    // </Grid>
     if(!code){ // no: we are not being redirected from an oauth server
       if(!oauth){
         const codeVerifier = base64URLEncode(crypto.randomBytes(32))
@@ -312,9 +295,8 @@ const Login = ({
         )
       }
     }else{ // yes: we are coming from an oauth server
-      console.log('get code_verifier', cookies.code_verifier)
+      // console.log('get code_verifier', cookies.code_verifier)
   
-      console.log("yanis");
       return (
         <LoadToken
           code={code}

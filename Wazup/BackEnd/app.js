@@ -1,9 +1,11 @@
 const express = require("express");
+const cors = require('cors')
 const { append } = require("express/lib/response"); // jsp pq c là mais je vais pas l'enlever, je crois que je l'utilise pas
 const { channels, users, messages } = require("./index"); // Index retourne le code de fonctionnalités des channels et msgs
 
 const app = express();
 app.use(express.json()); // To use icoming json data such as for the post request
+app.use( cors())
 
 // Récupérer un channel en particulier (id ici est le uuid qui est généré automatiquement lors de l'insertion d'un channel dans la base de données)
 app.get("/channels/:id", async (req, res) => {
