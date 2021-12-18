@@ -106,7 +106,7 @@ export const Leftbar = () => {
         setChannels(channels)
         const {data : users } = await axios.get('http://localhost:3001/users')
         setUsers(users)
-        
+// removeCurrentUser()        
       }catch(err){
         console.error(err)
       }
@@ -121,6 +121,7 @@ export const Leftbar = () => {
   };
   const handleClose = () => {
     setAnchorEl(null);
+    setChannelUsers([])
   };
 
 var  currentUserId
@@ -139,7 +140,6 @@ var filteredUsers
 
 const removeCurrentUser = ()=>{
   getCurrentUserId()
-  console.log(currentUsername);
   filteredUsers = users.filter (user => user.id !== currentUserId)
   // setUsers(filteredUsers)
 }
@@ -148,13 +148,16 @@ removeCurrentUser()
 
 
 //////////////////
-  const handleAdd = ()=>{
+  const handleAdd = async()=>{
+
+    const channel_name = create_channel_name(channelUsers)
+
+    await axios.post('http://localhost:3001/channels',{name : channel_name, users: channelUsers})
 
     setAnchorEl(null);
     ///await post channels , "users" ChannelUsers ; "name" : new
     setChannelUsers([])
-console.log(channelUsers);
-getCurrentUserId()
+// getCurrentUserId()
   }
 ////////////////////////////////:
 
@@ -164,6 +167,36 @@ getCurrentUserId()
     
     event.target.checked ===true ? setChannelUsers([...channelUsers,event.target.value]) : setChannelUsers(channelUsers.filter(channelUser => channelUser !== event.target.value))
   }
+
+
+  const create_channel_name = (channelUsers)=>{
+
+    var  channelName =""
+    channelUsers.map((channelUser)=>{
+
+      // console.log(channelUser);
+
+      filteredUsers.map((filteredUser)=>{ /// on a un id du premlier user du channel on veut recuperer le nom de tous les persnne
+
+        if(channelUser===filteredUser.id)
+        {
+          // console.log(filteredUser.username);
+      
+          channelName = channelName + ","+ filteredUser.username
+         
+        }
+
+      })
+ })
+
+return  channelName
+
+
+  }
+
+
+
+  
 
   return (
     <Box

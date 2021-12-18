@@ -18,8 +18,8 @@ import {
 } from "@material-ui/core";
 import { alpha } from "@material-ui/core";
 import Search from "@mui/icons-material/Search";
-import { borderRadius, color, flexbox } from "@mui/system";
-import { Container, Grid } from "@mui/material";
+import { borderLeft, borderRadius, color, flexbox } from "@mui/system";
+import { Container, Divider, Grid } from "@mui/material";
 import { ClassNames } from "@emotion/react";
 import Send from "@mui/icons-material/Send";
 import { Message } from "./Message";
@@ -63,6 +63,19 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
   },
 
+  toolbar :{
+position:"fixed",
+top:50,
+width:'80%',
+
+  },
+
+  channelInfo:{
+
+    margin:'0 auto  '
+
+  },
+
   messageText: {
     padding: "10px",
     borderRadius: "20px",
@@ -86,8 +99,16 @@ export const Messages = () => {
     //   </Button>
     // </div>
 
-
+<div>
+  
     <div className={classes.wrapall}>
+    <Toolbar className={classes.toolbar}>
+        <Typography variant="h6" className={classes.channelInfo}>
+               channelName 
+        </Typography>
+        <Divider></Divider>
+
+  </Toolbar>
       <div className={classes.wrapMessage}>       
         {/* <div className={classes.message}>
           <div className={classes.messageTop}>
@@ -117,6 +138,7 @@ export const Messages = () => {
           <Send />
         </Button>
       </div>
+    </div>
     </div>
   );
 };
