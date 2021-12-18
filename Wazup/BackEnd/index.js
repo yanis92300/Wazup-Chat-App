@@ -14,12 +14,23 @@ module.exports = {
       await db.put(`channels:${id}`, channel); // Normalement pas besoin de mettre le stringify(channel) pcq on a déja spécifié l'encodage en JSON
       
       if (channel.users){
+        // UN CHANNEL A FORCEMENT DES USERS !
           channel.users.map(async(currentUser)=>{
-          const user = await db.get(`users:${currentUser}`)
-          const updatedUser = merge(user, {channels: channel.users})
-          await db.put(`users:${currentUser}`, updatedUser)
-        })
+            const user = await db.get(`users:${currentUser}`)
+            await console.log(user.channels)
+            
+            //if (this.users.)
+            if (!user.channels){
+              const updatedUser = merge(user, {channels: [id]})
+              await db.put(`users:${currentUser}`, updatedUser)
+            }else{
+              const updatedUser = merge(user, {channels: [...user.channels, id]}) // -TESTER----------------------------------------------
+              await db.put(`users:${currentUser}`, updatedUser)
+            }
+        })    
       }
+
+
 
       return merge(channel, { id: id });
     },
@@ -64,15 +75,17 @@ module.exports = {
 
       // Tableau de users du channel qu'on va delete
       const {users} = channel
-      users.map(async (currentUser) => {
-        const user = await db.get(`users:${currentUser}`)
-        const {channels} = user
-        const filteredChannels = channels.filter((currentChannel)=> currentChannel !== id)
-        const updateUser = merge(user, {channels: filteredChannels}) 
-        await db.put(`users:${currentUser}`, updateUser)
-
-        
-      }) 
+      if (users){
+        users.map(async (currentUser) => {
+          const user = await db.get(`users:${currentUser}`)
+          const {channels} = user
+          const filteredChannels = channels.filter((currentChannel)=> currentChannel !== id)
+          const updateUser = merge(user, {channels: filteredChannels}) 
+          await db.put(`users:${currentUser}`, updateUser)
+  
+          
+        }) 
+      }
       await db.del(`channels:${id}`);
     },
 
@@ -109,7 +122,10 @@ module.exports = {
 
             // ATTENTION on ne veut pas les channelIDs copiés du user de leveldb 
             // --> on veut celui  
-            const modifiedUser = merge(user, { channels: [...channels, id] })
+            const filteredchannels = channels.filter(elem => elem !== id)
+            const newChannels = { channels: [...filteredchannels, id] }
+
+            const modifiedUser = merge(user, newChannels)
 
             // A REVOIR SI C PAS PLUTOT Modified channel ou l'original à parcourir plutôt que newData 
             // -->(sauf si celui-ci correspond à cleui de front-end et dans le bon ordre)
@@ -223,6 +239,20 @@ module.exports = {
         //// attention c est paps!id mais !list.id
         throw Error("Unregistered channel");
       }
+
+      const userToDelete = await db.get(`users:${id}`);
+      const {channels} = userToDelete
+      
+      if (channels){
+        channels.map(async (channel) => {
+          const channelObject = await db.get(`channels:${channel}`)
+          const {users} = channelObject
+          const filteredUsers = users.filter(user => user !== id)
+          const updatedChannel = merge(channelObject, {users: filteredUsers})
+          await db.put(`channels:${channel}`, updatedChannel)
+        })
+      }
+
       await db.del(`users:${id}`);
     },
   },
