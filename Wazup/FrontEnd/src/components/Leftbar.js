@@ -10,7 +10,12 @@ import Box from "@mui/material/Box";
 import InboxIcon from "@mui/icons-material/Inbox";
 import DraftsIcon from "@mui/icons-material/Drafts";
 import AddCircleSharpIcon from "@mui/icons-material/AddCircleSharp";
-
+import { useContext } from "react";
+import Context from "../Context";
+import { Checkbox } from "@material-ui/core";
+import { useNavigate } from "react-router";
+import axios from "axios";
+import { useEffect } from "react";
 import {
   AppBar,
   Button,
@@ -34,6 +39,8 @@ import Home from "@mui/icons-material/Home";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Inbox from "@mui/icons-material/Inbox";
 import AddCircleSharp from "@mui/icons-material/AddCircleSharp";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 const useStyles = makeStyles((theme) => ({
   item: {
@@ -61,16 +68,25 @@ const useStyles = makeStyles((theme) => ({
 
   header: {
     display: "flex",
-    [theme.breakpoints.down("xs")]: {
-      display: "none",
-    },
-
-    padding: theme.spacing(1),
+    
+    padding: theme.spacing(2),
     fontWeight: "600",
     color: "#555",
-    justifyContent: "left ",
-    alignItems: "center",
+    // alignItems: "center",
     flexDirection: "column",
+    margin : '0 auto'
+    
+  },
+
+  header_text:{
+    
+    [theme.breakpoints.down("sm")]: {
+      display:'none'
+    },
+
+   
+
+
   },
 
   avatar: {},
@@ -78,6 +94,77 @@ const useStyles = makeStyles((theme) => ({
 
 export const Leftbar = () => {
   const classes = useStyles();
+  const {
+    oauth,
+    channels, setChannels, users, setUsers
+  } = useContext(Context)
+  const navigate = useNavigate();
+  useEffect( () => {
+    const fetch = async () => {
+      try{
+        const {data: channels} = await axios.get('http://localhost:3001/channels')
+        setChannels(channels)
+        const {data : users } = await axios.get('http://localhost:3001/users')
+        setUsers(users)
+        
+      }catch(err){
+        console.error(err)
+      }
+    }
+    fetch()
+  }, [oauth, setChannels])
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+var  currentUserId
+var currentUsername
+
+const getCurrentUserId = ()=>{
+const currentEmail = oauth.email /// chamyanis
+users.map((user)=>{
+  if(user.email === currentEmail )
+     currentUserId = user.id 
+     currentUsername = user.username
+    })
+ }       
+
+var filteredUsers
+
+const removeCurrentUser = ()=>{
+  getCurrentUserId()
+  console.log(currentUsername);
+  filteredUsers = users.filter (user => user.id !== currentUserId)
+  // setUsers(filteredUsers)
+}
+
+removeCurrentUser()
+
+
+//////////////////
+  const handleAdd = ()=>{
+
+    setAnchorEl(null);
+    ///await post channels , "users" ChannelUsers ; "name" : new
+    setChannelUsers([])
+console.log(channelUsers);
+getCurrentUserId()
+  }
+////////////////////////////////:
+
+  const [channelUsers, setChannelUsers] = useState([])
+
+  const handleChange = (event)=>{
+    
+    event.target.checked ===true ? setChannelUsers([...channelUsers,event.target.value]) : setChannelUsers(channelUsers.filter(channelUser => channelUser !== event.target.value))
+  }
+
   return (
     <Box
       className={classes.container}
@@ -88,13 +175,57 @@ export const Leftbar = () => {
       }}
     >
       <nav>
-        <div className={classes.header}>
+        
+        <Button className={classes.header} onClick={handleClick} > 
           <AddCircleSharp
             sx={{ height: "28px", width: "28px", paddingLeft: "3px" }}
           />
 
-          <div style={{}}>Discussions</div>
-        </div>
+          <div  className={classes.header_text}>Discussions</div>
+        </Button>
+
+        <Menu     
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "left",
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "left",
+          }}
+        >
+         {
+
+            filteredUsers.map((user)=>{
+              return(
+                <MenuItem>
+                
+                <FormControlLabel control={<Checkbox />} value ={user.id} label={user.username} onChange={handleChange}  />
+
+              </MenuItem>
+              )
+            })
+
+          }
+          <MenuItem onClick={handleAdd}> 
+
+          <label style={{margin:'0 auto'}}>ADD</label>
+
+          </MenuItem>
+
+
+
+          {/* <MenuItem className={classes.menuItem} onClick={handleClose}>
+            Profile
+          </MenuItem>
+     
+          <MenuItem onClick={handleClose}>My account</MenuItem>
+          <MenuItem >Logout</MenuItem> */}
+        </Menu>
+        
         <List disablePadding>
           <Divider />
           <ListItem >

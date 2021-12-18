@@ -204,15 +204,13 @@ const LoadToken = ({
         }))
         removeCookie('code_verifier')
         setOauth(data)
-        // const newUser = JSON.stringify({username : data.username})
+        /// add New User
         const  users = await axios.get('http://localhost:3001/users')   
         var isHere = false
         users.data.map(async(user)=>{
-
           if(data.email === user.email )
           {
             isHere = true   
-            // return;        
             
           }            
       })
@@ -222,41 +220,19 @@ const LoadToken = ({
               await axios.post('http://localhost:3001/users',{username : data.username, email: data.email})
 
             }
-          
 
-        
-
-        
-
-        
-
-
-
-
-
-
-      // if(users.data.find(!data.email) )
-      //   await axios.post('http://localhost:3001/users',{username : data.username, email: data.email}) 
-                
-        
+        // const channelResponse = await axios.get('http://localhost:3001/channels')        
+        // const channels =channelResponse.data
+      
         navigate('/')
       }catch (err) {
         console.error(err)
       }
-    }
-
-    
-        
-      
-        
-      
+    }      
     
     fetch()
     //// requete post
     // add_user();
-
-
-
   })
   return (
     <div css={styles.root}>Loading tokens</div>

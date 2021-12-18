@@ -18,7 +18,7 @@ const App = () => {
   const gochannels = (
     <Navigate
       to={{
-        pathname: "/channels",
+        pathname: "/channels",    
         state: { from: location },
       }}
     />
@@ -38,7 +38,6 @@ const App = () => {
         {/* <Route exact path="/" element={<Login />} /> */}
         <Route path="/channels/*" element={oauth ? (<Main />) : (gohome)}/>
         {/* <Route path="/channels/*" element={<Main />} /> */}
-
 
         <Route path="/Signup/*" element={<Signup />} />
       </Routes>

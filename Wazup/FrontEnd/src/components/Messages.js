@@ -37,8 +37,9 @@ const useStyles = makeStyles((theme) => ({
   },
 
   wrapMessage: {
-    height: "95vh",
+    height: "84vh",
     overflowY: "scroll",
+    marginTop:'130px'
   },
   wrapall: {
     display: "flex",
@@ -85,9 +86,9 @@ export const Messages = () => {
     //   </Button>
     // </div>
 
+
     <div className={classes.wrapall}>
-      <div className={classes.wrapMessage}>
-        /// Future message Component
+      <div className={classes.wrapMessage}>       
         {/* <div className={classes.message}>
           <div className={classes.messageTop}>
             <p className={classes.messageText}>
@@ -105,6 +106,9 @@ export const Messages = () => {
         <Message own={true} />
         <Message />
         <Message />
+        <Message />
+        <Message />
+
       </div>
       <div className={classes.box}>
         {/* <TextField variant="outlined" label="Messsage"></TextField> */}

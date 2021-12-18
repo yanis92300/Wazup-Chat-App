@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import {
   AppBar,
   Button,
+  Checkbox,
   InputBase,
   makeStyles,
   Menu,
@@ -83,7 +84,7 @@ export const Navbar = () => {
           Wazup Chat
         </Typography>
         
-        <Typography> 
+        {/* <Typography> 
         { 
         oauth ?
           <span>
@@ -92,7 +93,7 @@ export const Navbar = () => {
         :
           <span>new user</span>
       }
-        </Typography>
+        </Typography> */}
 
 
        
@@ -128,6 +129,7 @@ export const Navbar = () => {
           <MenuItem className={classes.menuItem} onClick={handleClose}>
             Profile
           </MenuItem>
+     
           <MenuItem onClick={handleClose}>My account</MenuItem>
           <MenuItem onClick={onClickLogout}>Logout</MenuItem>
         </Menu>

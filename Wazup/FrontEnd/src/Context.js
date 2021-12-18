@@ -13,6 +13,7 @@ export const Provider = ({
   const [oauth, setOauth] = useState(cookies.oauth)
   const [drawerVisible, setDrawerVisible] = useState(false)
   const [channels, setChannels] = useState([])
+  const [users, setUsers] = useState([])
   const [currentChannel, setCurrentChannel] = useState(null)
   return (
     <Context.Provider value={{
@@ -30,19 +31,23 @@ export const Provider = ({
         }else{
           setCurrentChannel(null)
           setChannels([])
+          setUsers([])
           removeCookie('oauth')
         }
         setOauth(oauth)
       },
       channels: channels,
+      users : users,
       drawerVisible: drawerVisible,
       setDrawerVisible: setDrawerVisible,
       setChannels: setChannels,
+      setUsers : setUsers,
       currentChannel: currentChannel,
       setCurrentChannel: (channelId) => {
         const channel = channels.find( channel => channel.id === channelId)
         setCurrentChannel(channel)
       },
+      
     }}>{children}</Context.Provider>
   )
 }
