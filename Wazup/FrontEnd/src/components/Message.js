@@ -94,11 +94,23 @@ export const Message = (props) => {
 
   // BESOIN pour suppr le message 
   const {
-    messages, setMessages
+    messages, setMessages, users, setUsers, oauth , 
   } = useContext(Context)
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+
+  var  currentUserId
+  
+  const getCurrentUserId = ()=>{
+  const currentEmail = oauth.email /// chamyanis
+  users.map((user)=>{
+    if(user.email === currentEmail )
+       currentUserId = user.id 
+      })
+   }  
+
+getCurrentUserId()
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -109,7 +121,7 @@ export const Message = (props) => {
     const fetch = async () => {
       try{
      
-          const {data: res_messages} = await axios.get(`http://localhost:3001/channels/${props.message.channelId}/messages`)
+          const {data: res_messages} = await axios.get(`http://localhost:3001/channels/${props.message.channelId}/messages/`)
           //console.log(res_messages)
           setMessages(res_messages) // Rempli messages du useContext !!!!
 
@@ -122,13 +134,13 @@ export const Message = (props) => {
     
   }, []) // [ ] ???? pour les console.log dans le handleClose ca change des trucs
 
-  const handleClose = (event) => {
+  const handleClose = async (event) => {
 
     /// -------------- A  FINIR DE CODER DELETE -------------------------------
     if (event.currentTarget.getAttribute('name') === 'delete'){
       console.log("In delete");
       //console.log(props.message)
-      //await axios.delete(`http://localhost:3001/channels/${props.message.channelId}/messages/${props.message.creation}`)
+      await axios.delete(`http://localhost:3001/channels/${props.message.channelId}/messages/${props.message.creation}`)
       const filteredMessages = messages.filter(message => message.creation !== props.message.creation)
       if (messages) console.log(messages)
       setMessages(filteredMessages)
@@ -139,15 +151,22 @@ export const Message = (props) => {
     }
 
     /// -------------- A  FINIR DE CODER MODIFIER -------------------------------
+    if(event.currentTarget!== null)
+    {
+      
     if (event.currentTarget.getAttribute('name') === 'modify'){
       console.log("In modify");
       // CA MODIFIE BIEN LES MESSAGES !!! ALORS PQ CA NE CHANGE PAS A l'écran
       // --> CA change dans messages mais pas sur l'interface en temps réel !!! (socket comme eliott ??)
+      await axios.put(`http://localhost:3001/channels/${props.message.channelId}/messages/${props.message.creation}`,{author : currentUserId, content : "non"})
+
+
       props.message.content = "noooo"
       if (messages) console.log(messages)
       setMessages(messages)
       if (messages) console.log(messages)
     }
+  }
 
     setAnchorEl(null);
   };

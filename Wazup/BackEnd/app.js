@@ -108,7 +108,7 @@ app.put("/channels/:id/messages/:creation", (req, res) =>{
 })
 
 app.delete("/channels/:id/messages/:creation", async (req, res) => {
-  await users.delete(req.params.id, req.params.creation);
+  await messages.delete(req.params.id, req.params.creation);
   res.status(200).json({ message: "success" });
 });
 

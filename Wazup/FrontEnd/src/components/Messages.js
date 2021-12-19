@@ -24,7 +24,7 @@ import {
 } from "@material-ui/core";
 import { alpha } from "@material-ui/core";
 import Search from "@mui/icons-material/Search";
-import { borderLeft, borderRadius, color, flexbox } from "@mui/system";
+import { borderBottom, borderLeft, borderRadius, color, flexbox } from "@mui/system";
 import { Container, Divider, Grid } from "@mui/material";
 import { ClassNames } from "@emotion/react";
 import Send from "@mui/icons-material/Send";
@@ -51,7 +51,6 @@ const useStyles = makeStyles((theme) => ({
   wrapall: {
     display: "flex",
     flexDirection: "column",
-
   },
   input: {
     borderRadius: theme.shape.borderRadius,
@@ -73,13 +72,13 @@ const useStyles = makeStyles((theme) => ({
 
   toolbar :{
     position:"fixed",
-    top:50,
-    width:'80%',
+    top:60,
+    width:'81%',
     display: "flex",
     justifyContent: "space-between ",
-    color: "#7943FF",
-    backgroundImage: "linear-gradient(to right, rgba(0,224, 255, 1), rgba(0, 133, 255, 1))",
-    paddingTop: "1px"
+    paddingTop: "1px",
+    borderBottom:'solid grey 0.5px',
+    borderColor:' #d2d2d2 '
   },
 
 
