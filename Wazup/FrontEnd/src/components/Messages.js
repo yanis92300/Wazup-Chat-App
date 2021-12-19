@@ -201,7 +201,7 @@ if(currentChannel)
         { 
         oauth && !currentChannel ?
           <span>
-            {oauth.username}
+            Wazuuup {oauth.username} :)
           </span>
         :
         <></>
