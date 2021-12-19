@@ -107,7 +107,7 @@ export const Leftbar = () => {
         //console.log(channels);
         const {data : users } = await axios.get('http://localhost:3001/users')
         setUsers(users)
-// removeCurrentUser()        
+        removeCurrentUser()        
       }catch(err){
         console.error(err)
       }

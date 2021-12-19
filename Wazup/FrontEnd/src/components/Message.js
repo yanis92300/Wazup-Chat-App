@@ -10,11 +10,15 @@ import {
   Toolbar,
   Typography,
 } from "@material-ui/core";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { alpha } from "@material-ui/core";
 import Search from "@mui/icons-material/Search";
 import { borderRadius, color, flexbox, rgbToHex } from "@mui/system";
 import { Container, Grid } from "@mui/material";
 import { ClassNames } from "@emotion/react";
+import axios from "axios";
+import { useContext, useRef, useEffect} from "react";
+import Context from "../Context";
 
 const useStyles = makeStyles((theme) => ({
   // textBar: {
@@ -34,6 +38,8 @@ const useStyles = makeStyles((theme) => ({
 
     
   },
+
+  menu: {},
 
   box: {
     textAlign: "center",
@@ -85,14 +91,129 @@ const useStyles = makeStyles((theme) => ({
 
 export const Message = (props) => {
   const classes = useStyles(props);
+
+  // BESOIN pour suppr le message 
+  const {
+    messages, setMessages
+  } = useContext(Context)
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  /// A FINIR DE CODER ///////////
+  useEffect( () => {
+    const fetch = async () => {
+      try{
+     
+          const {data: res_messages} = await axios.get(`http://localhost:3001/channels/${props.message.channelId}/messages`)
+          //console.log(res_messages)
+          setMessages(res_messages) // Rempli messages du useContext !!!!
+
+        }catch(err){
+
+      }
+    }
+    fetch()
+
+    
+  }, []) // [ ] ???? pour les console.log dans le handleClose ca change des trucs
+
+  const handleClose = (event) => {
+
+    /// -------------- A  FINIR DE CODER DELETE -------------------------------
+    if (event.currentTarget.getAttribute('name') === 'delete'){
+      console.log("In delete");
+      console.log(props.message)
+      //await axios.delete(`http://localhost:3001/channels/${props.message.channelId}/messages/${props.message.creation}`)
+      if (messages) console.log(messages)
+      const filteredMessages = messages.filter(message => message.creation !== props.message.creation)
+      console.log(filteredMessages)
+      setMessages(filteredMessages)
+    }
+
+    /// -------------- A  FINIR DE CODER MODIFIER -------------------------------
+    if (event.currentTarget.getAttribute('name') === 'modify'){
+      console.log("In modify");
+    }
+
+    setAnchorEl(null);
+  };
+
   return (
     <div className={classes.message}>
       <div className={classes.messageTop}>
-        <p className={classes.messageText}>
-         {
-           props.text
-         }
-        </p>
+        {
+          props.own === true ?( 
+            <>
+              <Button id="MoreVertButton" style={{ color: "black" }} onClick={handleClick} >
+                <MoreVertIcon />
+              </Button>
+              <Menu
+                className={classes.menu}
+                id="MoreVertMenu"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+              >
+                  <MenuItem className={classes.menuItem} name='delete' onClick={handleClose}>
+                    delete message
+                  </MenuItem>
+            
+                  <MenuItem name='modify' onClick={handleClose}>modify message</MenuItem>
+              </Menu>
+              <p className={classes.messageText}>
+                {
+                  props.text
+                }
+              </p>
+            </>
+             ) 
+             :
+            (<>
+                <p className={classes.messageText}>
+                  {
+                    props.text
+                  }
+                </p>
+                <Button id="MoreVertButton" style={{ color: "black" }} onClick={handleClick} >
+                  <MoreVertIcon />
+                </Button> 
+                <Menu
+                  className={classes.menu}
+                  id="MoreVertMenu"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "left",
+                  }}
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "left",
+                  }}
+                >
+                  <MenuItem className={classes.menuItem} name='delete' onClick={handleClose}>
+                    delete message
+                  </MenuItem>
+            
+                  <MenuItem name='modify' onClick={handleClose}>modify message</MenuItem>
+                </Menu>
+            </>
+            )
+        }
       </div>
       <div className={classes.messageBottom}>1 hour ago</div>
     </div>

@@ -154,7 +154,7 @@ setContent(event.target.value)
     fetch()
 
     
-  }, [ oauth, navigate,currentChannel])
+  }, [ oauth, navigate,currentChannel]) // RAJOUTER DU CODE ICI ???? genre messages ? 
 
   const handleClick = async ()=>{
 
@@ -192,14 +192,14 @@ if(currentChannel)
           if(message.author=== currentUserId)
           {
             return(
-              <Message  own ={true} text = {message.content}/>
+              <Message  own={true} message={message}  text={message.content}/>
             )            
           }
           else
           {
             return(
 
-              <Message  own ={false}   text = {message.content} />
+              <Message  own={false} message={message}  text={message.content} />
             )
 
           }
