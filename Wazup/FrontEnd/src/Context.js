@@ -16,6 +16,7 @@ export const Provider = ({
   const [users, setUsers] = useState([])
   const [currentChannel, setCurrentChannel] = useState(null)
   const [messages, setMessages] = useState([])
+  const [content , setContent] = useState("")
   return (
     <Context.Provider value={{
       oauth: oauth,
@@ -40,6 +41,8 @@ export const Provider = ({
       },
       messages: messages,
       setMessages: setMessages,
+      content: content,
+      setContent: setContent,
       channels: channels,
       users : users,
       drawerVisible: drawerVisible,

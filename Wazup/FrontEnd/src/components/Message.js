@@ -127,17 +127,26 @@ export const Message = (props) => {
     /// -------------- A  FINIR DE CODER DELETE -------------------------------
     if (event.currentTarget.getAttribute('name') === 'delete'){
       console.log("In delete");
-      console.log(props.message)
+      //console.log(props.message)
       //await axios.delete(`http://localhost:3001/channels/${props.message.channelId}/messages/${props.message.creation}`)
-      if (messages) console.log(messages)
       const filteredMessages = messages.filter(message => message.creation !== props.message.creation)
-      console.log(filteredMessages)
+      if (messages) console.log(messages)
       setMessages(filteredMessages)
+      if (messages) console.log(messages)
+      
+      //console.log(filteredMessages)
+      //setMessages(filteredMessages)
     }
 
     /// -------------- A  FINIR DE CODER MODIFIER -------------------------------
     if (event.currentTarget.getAttribute('name') === 'modify'){
       console.log("In modify");
+      // CA MODIFIE BIEN LES MESSAGES !!! ALORS PQ CA NE CHANGE PAS A l'écran
+      // --> CA change dans messages mais pas sur l'interface en temps réel !!! (socket comme eliott ??)
+      props.message.content = "noooo"
+      if (messages) console.log(messages)
+      setMessages(messages)
+      if (messages) console.log(messages)
     }
 
     setAnchorEl(null);

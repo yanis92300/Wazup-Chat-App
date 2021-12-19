@@ -72,12 +72,14 @@ const useStyles = makeStyles((theme) => ({
   },
 
   toolbar :{
-position:"fixed",
-top:50,
-width:'80%',
-display: "flex",
+    position:"fixed",
+    top:50,
+    width:'80%',
+    display: "flex",
     justifyContent: "space-between ",
-
+    color: "#7943FF",
+    backgroundImage: "linear-gradient(to right, rgba(0,224, 255, 1), rgba(0, 133, 255, 1))",
+    paddingTop: "1px"
   },
 
 
@@ -117,10 +119,13 @@ export const Messages = () => {
   const { id } = useParams()
   const {
     oauth,
-    channels, setChannels, users, setUsers, currentChannel, setCurrentChannel
+    channels, setChannels,
+    users, setUsers,
+    currentChannel, setCurrentChannel,
+    messages, setMessages,
+    content, setContent 
   } = useContext(Context)
-  const [messages, setMessages] = useState([])
-  const [content , setContent] = useState("")
+  
   var currentChannelId 
 
   var  currentUserId
@@ -190,7 +195,20 @@ if(currentChannel)
   return (
 <div>
     <div className={classes.wrapall}>
-     <Toolbar className={classes.toolbar}>
+     <Toolbar color="blue" className={classes.toolbar}>
+
+       <Typography> 
+        { 
+        oauth && !currentChannel ?
+          <span>
+            {oauth.username}
+          </span>
+        :
+        <></>
+        
+        }
+        </Typography>
+
                <Typography variant="h6" className={classes.channelInfo}>
                { currentChannel ?  currentChannel.name : " "}       
                </Typography>
@@ -198,7 +216,7 @@ if(currentChannel)
           id="MoreVertButton"
           onClick={handleClickToolbar}
         >
-          <MoreVertIcon />
+          <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
         </Button>
         <Menu
          // className={classes.menu}
