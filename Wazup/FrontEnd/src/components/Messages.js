@@ -75,8 +75,12 @@ const useStyles = makeStyles((theme) => ({
 position:"fixed",
 top:50,
 width:'80%',
+display: "flex",
+    justifyContent: "space-between ",
 
   },
+
+
 
   channelInfo:{
 
@@ -101,6 +105,15 @@ export const Messages = () => {
   const navigate = useNavigate()
   const classes = useStyles();
   const listRef = useRef()
+  const [anchorEl, setAnchorEl] = useState(null);
+  const handleClickToolbar= (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const open = Boolean(anchorEl);
+  const handleCloseToolbar = () => {
+    setAnchorEl(null);
+  };
+
   const { id } = useParams()
   const {
     oauth,
@@ -128,11 +141,15 @@ const handleChange = (event)=>{
 setContent(event.target.value)
 
 }
+const handleModifyChannel =()=> {
+
+  <InputBase placeholder=" Aa"   className={classes.menuChannelInfo} />
 
 
-  // const addMessage = (message) => {
-  //   setMessages([...messages, message])
-  // }
+
+
+}
+
   useEffect( () => {
     const fetch = async () => {
       try{
@@ -167,21 +184,50 @@ if(currentChannel)
     console.log(message);
     
 }
-
-      
-      
+         
     }  
 
   return (
 <div>
     <div className={classes.wrapall}>
-    <Toolbar className={classes.toolbar}>
-        <Typography variant="h6" className={classes.channelInfo}>
-               channelName 
-        </Typography>
-        <Divider></Divider>
+     <Toolbar className={classes.toolbar}>
+               <Typography variant="h6" className={classes.channelInfo}>
+               { currentChannel ?  currentChannel.name : " "}       
+               </Typography>
+               <Button
+          id="MoreVertButton"
+          onClick={handleClickToolbar}
+        >
+          <MoreVertIcon />
+        </Button>
+        <Menu
+         // className={classes.menu}
+          id="MoreVertMenu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleCloseToolbar}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "left",
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "left",
+          }}
+        >
+          <MenuItem className={classes.menuItem} onClick={handleModifyChannel}>
+            Modify channel Name
+          </MenuItem>
+     
+          <MenuItem >Add Member</MenuItem>
+        </Menu>
 
-  </Toolbar>
+
+
+
+
+              </Toolbar>
+    
 
       <div className={classes.wrapMessage}>       
         
@@ -192,14 +238,22 @@ if(currentChannel)
           if(message.author=== currentUserId)
           {
             return(
+              <div>
               <Message  own={true} message={message}  text={message.content}/>
+              
+              </div>
+              
             )            
           }
           else
           {
             return(
 
+              <div>
+
               <Message  own={false} message={message}  text={message.content} />
+             
+              </div>
             )
 
           }

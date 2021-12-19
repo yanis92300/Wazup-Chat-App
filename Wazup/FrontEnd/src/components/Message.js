@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   // },
   message: {
     paddingTop: theme.spacing(8),
-    paddingLeft: (props) => (props.own ? theme.spacing(8) : theme.spacing(155)),
+    paddingLeft: (props) => (props.own ? theme.spacing(8) : theme.spacing(150)),
     [theme.breakpoints.down("sm")]: {
       paddingLeft: (props) =>
         props.own ? theme.spacing(60) : theme.spacing(8),
@@ -215,7 +215,7 @@ export const Message = (props) => {
             )
         }
       </div>
-      <div className={classes.messageBottom}>1 hour ago</div>
+      {/* <div className={classes.messageBottom}>1 hour ago</div> */}
     </div>
   );
 };
