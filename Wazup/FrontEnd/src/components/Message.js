@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   // },
   message: {
     paddingTop: theme.spacing(8),
-    paddingLeft: (props) => (props.own ? theme.spacing(100) : theme.spacing(8)),
+    paddingLeft: (props) => (props.own ? theme.spacing(8) : theme.spacing(155)),
     [theme.breakpoints.down("sm")]: {
       paddingLeft: (props) =>
         props.own ? theme.spacing(60) : theme.spacing(8),
@@ -31,6 +31,8 @@ const useStyles = makeStyles((theme) => ({
       paddingLeft: (props) =>
         props.own ? theme.spacing(25) : theme.spacing(8),
     },
+
+    
   },
 
   box: {
@@ -41,11 +43,14 @@ const useStyles = makeStyles((theme) => ({
   wrapMessage: {
     height: "95vh",
     overflowY: "scroll",
+    
   },
 
   wrapall: {
     display: "flex",
     flexDirection: "column",
+    
+
   },
   input: {
     borderRadius: theme.shape.borderRadius,
@@ -68,8 +73,8 @@ const useStyles = makeStyles((theme) => ({
   messageText: {
     padding: "10px",
     borderRadius: "20px",
-    backgroundColor: (props) => (props.own ? "rgb(245,245,241)" : "#1877f2"),
-    color: (props) => (props.own ? "black" : "white"),
+    backgroundColor: (props) => (props.own ? "#1877f2" :  "rgb(245,245,241)"),
+    color: (props) => (props.own ? "white": "black" ),
     maxWidth: "400px",
   },
 
@@ -84,9 +89,9 @@ export const Message = (props) => {
     <div className={classes.message}>
       <div className={classes.messageTop}>
         <p className={classes.messageText}>
-          Hello this is a messageHello this is a message Hello this is a
-          messageHello this is a message Hello this is a message Hello this is a
-          m
+         {
+           props.text
+         }
         </p>
       </div>
       <div className={classes.messageBottom}>1 hour ago</div>

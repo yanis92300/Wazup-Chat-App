@@ -96,7 +96,7 @@ export const Leftbar = () => {
   const classes = useStyles();
   const {
     oauth,
-    channels, setChannels, users, setUsers
+    channels, setChannels, users, setUsers, currentChannel, setCurrentChannel
   } = useContext(Context)
   const navigate = useNavigate();
   useEffect( () => {
@@ -104,6 +104,7 @@ export const Leftbar = () => {
       try{
         const {data: channels} = await axios.get('http://localhost:3001/channels')
         setChannels(channels)
+        //console.log(channels);
         const {data : users } = await axios.get('http://localhost:3001/users')
         setUsers(users)
 // removeCurrentUser()        
@@ -168,6 +169,10 @@ removeCurrentUser()
     event.target.checked ===true ? setChannelUsers([...channelUsers,event.target.value]) : setChannelUsers(channelUsers.filter(channelUser => channelUser !== event.target.value))
   }
 
+  const handleClickItem = (event)=>{
+    setCurrentChannel(event.currentTarget.getAttribute('id'))
+    // console.log(currentChannel);//object
+  }
 
   const create_channel_name = (channelUsers)=>{
 
@@ -193,10 +198,6 @@ return  channelName
 
 
   }
-
-
-
-  
 
   return (
     <Box
@@ -261,59 +262,43 @@ return  channelName
         
         <List disablePadding>
           <Divider />
-          <ListItem >
-            <ListItemButton style={{ paddingBottom: "10px" }}>
-              <ListItemAvatar>
-                <Avatar
-                  alt="Travis Howard"
+
+          {
+
+            channels.map((channel)=>{
+
+              return ( 
+                <>
+                      <ListItem>
+                        <ListItemButton style={{ paddingBottom: "10px" }}  id = {channel.id} onClick={handleClickItem} >
+                        <ListItemAvatar>
+                        <Avatar
+                  alt={channel.name.charAt(1)}
                   src="/static/images/avatar/2.jpg"
                   sx={{ height: "35px", width: "35px" }}
-                />
-              </ListItemAvatar>
-              <ListItemText
+                        />
+                        </ListItemAvatar>
+                        <ListItemText
                 className={classes.text}
-                primary="Travis"
-                secondary="Coucou bg "
+                primary={channel.name}
+                secondary="...."
               />
-            </ListItemButton>
-          </ListItem>
-          <Divider />
-          <ListItem >
-            <ListItemButton style={{ paddingBottom: "10px" }}>
-              <ListItemAvatar>
-                <Avatar
-                  alt="Cindy Baker"
-                  src="/static/images/avatar/3.jpg"
-                  sx={{ height: "35px", width: "35px" }}
-                />
-              </ListItemAvatar>
-              <ListItemText
-                className={classes.text}
-                primary="Christian"
-                secondary="Haha mdrrrr"
-              />
-            </ListItemButton>
-          </ListItem>
-          <Divider />
-          <ListItem >
-            <ListItemButton style={{ paddingBottom: "10px" }}>
-              <ListItemAvatar>
-                <Avatar
-                  alt="Xravis Howard"
-                  src="/static/images/avatar/2.jpg"
-                  sx={{ height: "35px", width: "35px" }}
-                />
-              </ListItemAvatar>
-              <ListItemText
-                className={classes.text}
-                primary="Xavier"
-                secondary="Je sais pas :/"
-              />
-            </ListItemButton>
-          </ListItem>
+                        </ListItemButton>
+
+
+
+                      </ListItem>   
+
+                      
+                      <Divider/>
+                      </>
+
+              )
+
+            })
+          }          
         </List>
       </nav>
-      <Divider />
     </Box>
   );
 };

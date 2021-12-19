@@ -4,6 +4,12 @@ import BuildIcon from "@mui/icons-material/Build";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useState } from "react";
 import SendIcon from "@mui/icons-material/Send";
+import { useContext, useRef} from "react";
+import Context from "../Context";
+import { Checkbox } from "@material-ui/core";
+import { useNavigate , useParams} from "react-router";
+import axios from "axios";
+import { useEffect } from "react";
 
 import {
   AppBar,
@@ -39,11 +45,13 @@ const useStyles = makeStyles((theme) => ({
   wrapMessage: {
     height: "84vh",
     overflowY: "scroll",
-    marginTop:'130px'
+    marginTop:'130px',
+
   },
   wrapall: {
     display: "flex",
     flexDirection: "column",
+
   },
   input: {
     borderRadius: theme.shape.borderRadius,
@@ -90,17 +98,82 @@ width:'80%',
 }));
 
 export const Messages = () => {
+  const navigate = useNavigate()
   const classes = useStyles();
-  return (
-    // <div className={classes.textBar}>
-    //   <InputBase placeholder=" Aa" />
-    //   <Button className={classes.sendIcon}>
-    //     <Send />
-    //   </Button>
-    // </div>
+  const listRef = useRef()
+  const { id } = useParams()
+  const {
+    oauth,
+    channels, setChannels, users, setUsers, currentChannel, setCurrentChannel
+  } = useContext(Context)
+  const [messages, setMessages] = useState([])
+  const [content , setContent] = useState("")
+  var currentChannelId 
 
-<div>
+  var  currentUserId
   
+  const getCurrentUserId = ()=>{
+  const currentEmail = oauth.email /// chamyanis
+  users.map((user)=>{
+    if(user.email === currentEmail )
+       currentUserId = user.id 
+      })
+   }  
+
+getCurrentUserId()
+
+
+
+const handleChange = (event)=>{
+setContent(event.target.value)
+
+}
+
+
+  // const addMessage = (message) => {
+  //   setMessages([...messages, message])
+  // }
+  useEffect( () => {
+    const fetch = async () => {
+      try{
+        if(currentChannel)
+    {
+      currentChannelId = currentChannel.id
+    }
+        if(currentChannel)
+        {
+          const {data: res_messages} = await axios.get(`http://localhost:3001/channels/${currentChannelId}/messages`)
+          setMessages(res_messages)
+
+        }
+        
+      }catch(err){
+
+      }
+    }
+    fetch()
+
+    
+  }, [ oauth, navigate,currentChannel])
+
+  const handleClick = async ()=>{
+
+
+if(currentChannel)
+{
+ const  {data : message} =   await axios.post(`http://localhost:3001/channels/${currentChannel.id}/messages`,{author : currentUserId , content : content })
+  setMessages([...messages, message])
+    setContent("")
+    console.log(message);
+    
+}
+
+      
+      
+    }  
+
+  return (
+<div>
     <div className={classes.wrapall}>
     <Toolbar className={classes.toolbar}>
         <Typography variant="h6" className={classes.channelInfo}>
@@ -109,32 +182,37 @@ export const Messages = () => {
         <Divider></Divider>
 
   </Toolbar>
-      <div className={classes.wrapMessage}>       
-        {/* <div className={classes.message}>
-          <div className={classes.messageTop}>
-            <p className={classes.messageText}>
-              Hello this is a messageHello this is a message Hello this is a
-              messageHello this is a message Hello this is a message Hello this
-              is a message Hello this is a message Hello this is a message Hello
-              tthis is a message Hello this is a message Hello this is a message
-            </p>
-          </div>
-          <div className={classes.messageBottom}>1 hour ago</div>
-        </div> */}
-        <Message />
-        <Message own={true} />
-        <Message />
-        <Message own={true} />
-        <Message />
-        <Message />
-        <Message />
-        <Message />
 
+      <div className={classes.wrapMessage}>       
+        
+       {
+         messages.map((message)=>{
+          //  console.log(message.author);
+          //  console.log(currentUserId);
+          if(message.author=== currentUserId)
+          {
+            return(
+              <Message  own ={true} text = {message.content}/>
+            )            
+          }
+          else
+          {
+            return(
+
+              <Message  own ={false}   text = {message.content} />
+            )
+
+          }
+
+         })
+
+       }
+        
       </div>
       <div className={classes.box}>
         {/* <TextField variant="outlined" label="Messsage"></TextField> */}
-        <InputBase placeholder=" Aa" className={classes.input} />
-        <Button className={classes.sendIcon}>
+        <InputBase placeholder=" Aa" className={classes.input}  value = {content}onChange={handleChange} />
+        <Button className={classes.sendIcon}  onClick={handleClick}  >
           <Send />
         </Button>
       </div>
