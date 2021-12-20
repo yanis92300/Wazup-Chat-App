@@ -128,7 +128,7 @@ When connecting to the app, the users gets acces to the discussion already exist
 In the toolbar of a Channel there is the Channel name and a Icon Button on the right. Click it to add users. When we wish to add some users, the users not remaining in the channel are console logged !! But we didn't find a way to display them in a component at the screen. Other than this, we have the right add users functions in the backend and works perfectly ass we tested with Postman.
 
 ## Message Modification 1.5/2
-A message is automatically modified to "nooon" when you click on the Icon button of a message in a channel and then click on 'modify massage'. However it is not modified in real time, you need to delete another message in the channel to see the changes !! But it works fine in the backend as we tested with Postman.
+A message is automatically modified to "nooon" when you click on the Icon button of a message in a channel and then click on 'modify massage'. However it is not modified in real time, you need to refresh the page.
 
 ## Message removal 2/2
 A message is deleted in real time when the 'delete message' button from the Icon Button of a message. It is also deleted in the database.
