@@ -1,6 +1,3 @@
-# yanis_nicolas_webtech yanioi
-
-
 # Clone the repository on your machine
 git clone https://github.com/yanis92300/yanis_nicolas_webtech.git
 cd Wazup
