@@ -6,7 +6,6 @@ git clone https://github.com/yanis92300/yanis_nicolas_webtech.git
 cd Wazup
 
 
-### A VOIR CAR NOTRE DOSSIER DEX EST DEJA DANS NOTRE REPO GIT
 # Install Go
 apt install golang-go
 # Download Dex
