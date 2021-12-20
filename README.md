@@ -43,7 +43,7 @@ cd dex
 make
 make examples
 
-## Modify the ClientId and clientSecret of the .yml file for a github connection 
+## Modify the ClientId and clientSecret of the config-dev.yaml file for a github connection 
 - type: github
   id: github
   name: GitHub
