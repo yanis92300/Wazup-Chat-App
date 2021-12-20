@@ -35,7 +35,6 @@ export const Main = () => {
         >
           <Messages /> 
         </Grid>
-        {/* <Grid item sm={3}></Grid> */}
       </Grid>
 
 

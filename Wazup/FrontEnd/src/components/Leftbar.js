@@ -47,7 +47,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex ",
     alignItems: "center",
     marginBottom: theme.spacing(5),
-    //border: "solid",
   },
   text: {
     color: "#555",
@@ -72,7 +71,6 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     fontWeight: "600",
     color: "#555",
-    // alignItems: "center",
     flexDirection: "column",
     margin : '0 auto'
     
@@ -104,7 +102,6 @@ export const Leftbar = () => {
       try{
         const {data: channels} = await axios.get('http://localhost:3001/channels')
         setChannels(channels)
-        //console.log(channels);
         const {data : users } = await axios.get('http://localhost:3001/users')
         setUsers(users)
         removeCurrentUser()        
@@ -142,13 +139,11 @@ var filteredUsers
 const removeCurrentUser = ()=>{
   getCurrentUserId()
   filteredUsers = users.filter (user => user.id !== currentUserId)
-  // setUsers(filteredUsers)
 }
 
 removeCurrentUser()
 
 
-//////////////////
   const handleAdd = async()=>{
 
     const channel_name = create_channel_name(channelUsers)
@@ -156,11 +151,9 @@ removeCurrentUser()
     await axios.post('http://localhost:3001/channels',{name : channel_name, users: channelUsers})
 
     setAnchorEl(null);
-    ///await post channels , "users" ChannelUsers ; "name" : new
     setChannelUsers([])
-// getCurrentUserId()
   }
-////////////////////////////////:
+
 
   const [channelUsers, setChannelUsers] = useState([])
 

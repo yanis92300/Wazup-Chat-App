@@ -156,7 +156,6 @@ const Redirect = ({
 
       </Grid>
        
-      {/* <Link onClick={redirect} color="secondary">Login with OpenID Connect and OAuth2</Link> */}
     </div>
   )
 }
@@ -204,7 +203,6 @@ const LoadToken = ({
         }))
         removeCookie('code_verifier')
         setOauth(data)
-        /// add New User
         const  users = await axios.get('http://localhost:3001/users')   
         var isHere = false
         users.data.map(async(user)=>{
@@ -220,9 +218,6 @@ const LoadToken = ({
               await axios.post('http://localhost:3001/users',{username : data.username, email: data.email})
 
             }
-
-        // const channelResponse = await axios.get('http://localhost:3001/channels')        
-        // const channels =channelResponse.data
       
         navigate('/')
       }catch (err) {
@@ -231,8 +226,6 @@ const LoadToken = ({
     }      
     
     fetch()
-    //// requete post
-    // add_user();
   })
   return (
     <div css={styles.root}>Loading tokens</div>
@@ -271,7 +264,6 @@ const Login = ({
         )
       }
     }else{ // yes: we are coming from an oauth server
-      // console.log('get code_verifier', cookies.code_verifier)
   
       return (
         <LoadToken
