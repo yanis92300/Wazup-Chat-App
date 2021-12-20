@@ -107,10 +107,7 @@ module.exports = {
         console.log(newData.users)
         await console.log(modifiedChannel)
 
-        // ATTENTION CA marche que pour l'ajout de user
-        // --> Cad que quand on refait un put request avec les mêmes users id (déjà existant dans le channel)
-        // ---> et dans le même ordres mais en retirant le dernier user par ex du req.body (dans le JSON)
-        // ----> l'id du user qui n'est pas dans le tableau a toujours pour channelId l'id du channel où il devrait plus être
+        
         for (let i = 0; i < newData.users.length; ++i) {
           // On prend le user correspondant au users qu'il y a dans la base de données 
           const user = await db.get(`users:${newData.users[i]}`)
@@ -120,21 +117,15 @@ module.exports = {
             
             const { channels } = user
 
-            // ATTENTION on ne veut pas les channelIDs copiés du user de leveldb 
-            // --> on veut celui  
             const filteredchannels = channels.filter(elem => elem !== id)
             const newChannels = { channels: [...filteredchannels, id] }
 
             const modifiedUser = merge(user, newChannels)
 
-            // A REVOIR SI C PAS PLUTOT Modified channel ou l'original à parcourir plutôt que newData 
-            // -->(sauf si celui-ci correspond à cleui de front-end et dans le bon ordre)
-            // + Si on supprime un user d'un channel , supprimer aussi l'id du channel dans l'instance du user retiré
-            // ATTENTION faudra jsuet que deouis le front-end les users d'un channel soit 
-            // --> dans le même ordre que celui du back-end (du + ancien au + récent)
+            
             await db.put(`users:${newData.users[i]}`, modifiedUser)
           }
-          // Si y'en a pas on en crée un tableau avec un user dedans (peut être plutot codé ca dans la creation d'un channel pltot que dans l'update)
+         
           else {
             const modifiedUser = merge(user, { channels: [id] })
             await db.put(`users:${newData.users[i]}`, modifiedUser)
@@ -156,11 +147,9 @@ module.exports = {
       await console.log(original)
       // Si ya pas de user (ce qui ne devrait pas être possible), verifier si c'est pas le admin a la place
       if (!original.users) throw Error('No User to delete in this channel')
-      // Et maintenant on souhaite retirer un des user (userId) du channel 
+      
       const { users } = original // On récupère le tableau de users présent dans le channel correspondant de leveldb
-      // On récupère un tableau sans l'id du user qu'on souhaite retirer du channel  
-      // On met dans un objet un tableau d'objet pour le merge avec le channel original et écraser les anciens users
-      // Avec le bon tableau filtré de users
+      
       const newUsers = users.filter(user => user !== userId)
       console.log({ users: newUsers })
       const newUsersObject = { users: newUsers }; // --> Retourne dans un tableau tout ce qui est différent du userId qu'on va supp 
@@ -182,20 +171,7 @@ module.exports = {
       await db.put(`users:${userId}`, updatedUserObject) // userId passé en paramètres de base
       return newChannel;
     },
-    // Cette fonction est très similaire au update ci dessus, les différences seront les verif sur le fait que la user demandé soit valide ?
-    // Et voir comment ajouter l'id du channel à ce user 
-    // addUsers: async (id, newData) => {
-    //   const original = await db.get(`channels:${id}`); // on garde l'originae pour pouvoir copier ses éléments
-    //   await console.log(original);
-    //   // If there is no value for users in the JSON req.body
-    //   if (!newData.users)   throw Error("No user value in the request")
-    //   // If there is a users value in the JSON of the req.body
-    //   console.log(newData);
-    //   const modifiedChannel = merge(original, newData);
-    //   console.log(modifiedChannel);
-    //   await db.put(`channels:${id}`, modifiedChannel);
-    //   await db.put
-    // },
+    
   },
 
   /// END CHANNELS
@@ -236,7 +212,6 @@ module.exports = {
 
     delete: async (id) => {
       if (!id) {
-        //// attention c est paps!id mais !list.id
         throw Error("Unregistered channel");
       }
 
