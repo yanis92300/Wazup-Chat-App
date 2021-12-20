@@ -1,7 +1,7 @@
 # yanis_nicolas_webtech yanioi
 
 
-# Clone the repositery on your machine
+# Clone the repository on your machine
 git clone https://github.com/yanis92300/yanis_nicolas_webtech.git
 cd Wazup
 
@@ -12,7 +12,6 @@ apt install golang-go
 git clone https://github.com/dexidp/dex.git
 # Build Dex
 cd dex
-make
 make examples
 
 
@@ -52,8 +51,8 @@ make examples
   id: github
   name: GitHub
   config:
-    clientID: xxxx98f1c26493dbxxxx
-    clientSecret: xxxxxxxxx80e139441b637796b128d8xxxxxxxxx
+    clientID: 356b77ab4b475cfcb6d2
+    clientSecret: 8a9431870c4648e9234e26b8551925cc28b4556d
     redirectURI: http://127.0.0.1:5556/dex/callback
 
 ## go in th edex directory
