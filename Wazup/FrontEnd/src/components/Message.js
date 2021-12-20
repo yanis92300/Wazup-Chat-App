@@ -215,9 +215,7 @@ getCurrentUserId()
                     props.text
                   }
                 </p>
-                <Button id="MoreVertButton" style={{ color: "black" }} onClick={handleClick} >
-                  <MoreVertIcon />
-                </Button> 
+                
                 <Menu
                   className={classes.menu}
                   id="MoreVertMenu"
